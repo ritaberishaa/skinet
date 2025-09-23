@@ -461,7 +461,7 @@ Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
 
-# Dump file
+
 *.stackdump
 
 # Folder config file
