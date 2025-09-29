@@ -1,0 +1,253 @@
+// Apply Montserrat font to entire header
+header {
+  font-family: 'Montserrat', sans-serif;
+}
+
+// Header container - responsive width and centered
+.header-container {
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  
+  @media (max-width: 1024px) {
+    width: 90%;
+  }
+  
+  @media (max-width: 768px) {
+    width: 95%;
+    padding: 0 0.75rem;
+  }
+  
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: 0 0.5rem;
+  }
+}
+
+// Company name styling
+.company-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  letter-spacing: -0.025em;
+  
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+  }
+}
+
+// Navigation links - minimalist gray style
+.nav-link {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6B7280;
+  text-decoration: none;
+  letter-spacing: 0.025em;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: #374151;
+  }
+}
+
+// Shopping cart button
+.cart-btn {
+  position: relative;
+  padding: 0.5rem;
+  color: #6B7280;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: #374151;
+  }
+}
+
+// Auth buttons
+.auth-btn {
+  font-family: 'Montserrat', sans-serif;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  
+  @media (max-width: 1024px) {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+}
+
+.login-btn {
+  background-color: transparent;
+  color: #6B7280;
+  border: 1px solid #E5E7EB;
+  
+  &:hover {
+    background-color: #F9FAFB;
+    color: #374151;
+  }
+}
+
+.register-btn {
+  background-color: #E5E7EB;
+  color: #374151;
+  
+  &:hover {
+    background-color: #D1D5DB;
+    transform: translateY(-1px);
+  }
+}
+
+// Badge styling
+.mat-badge-content {
+  background: #ef4444 !important;
+  color: white !important;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+// Mobile menu
+.mobile-menu {
+  background-color: #FFFFFF;
+  border-top: 1px solid #E5E7EB;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.3s ease-out;
+  margin: 0 -1rem; // Extend to container edges
+}
+
+// Mobile navigation section
+.mobile-nav-section {
+  padding: 1.5rem 2rem 1rem 2rem;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 0.875rem 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #6B7280;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid transparent;
+  
+  &:hover {
+    color: #374151;
+    padding-left: 0.5rem;
+  }
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+// Mobile auth section
+.mobile-auth-section {
+  padding: 1rem 2rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+}
+
+.mobile-auth-btn {
+  font-family: 'Montserrat', sans-serif;
+  border: none;
+  padding: 0.875rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  flex: 1;
+}
+
+.mobile-login-btn {
+  background-color: transparent;
+  color: #6B7280;
+  border: 1px solid #E5E7EB;
+  
+  &:hover {
+    background-color: #F9FAFB;
+    color: #374151;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.mobile-register-btn {
+  background-color: #E5E7EB;
+  color: #374151;
+  
+  &:hover {
+    background-color: #D1D5DB;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Additional responsive adjustments
+@media (max-width: 640px) {
+  // Hide navigation on small screens, show mobile menu instead
+  nav {
+    display: none !important;
+  }
+  
+  // Ensure auth buttons are hidden on very small screens
+  .auth-btn {
+    display: none;
+  }
+  
+  // Make sure mobile menu toggle is visible
+  .md\\:hidden {
+    display: block !important;
+  }
+}
+
+@media (max-width: 480px) {
+  // Extra small screens
+  .header-container {
+    .flex {
+      gap: 0.5rem;
+    }
+  }
+  
+  // Reduce logo size on very small screens
+  img {
+    height: 1.75rem !important;
+  }
+  
+  .company-name {
+    font-size: 1rem;
+  }
+}

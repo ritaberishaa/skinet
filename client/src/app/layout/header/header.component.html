@@ -1,0 +1,58 @@
+<header class="bg-white">
+    <div class="header-container">
+        <div class="flex items-center justify-between h-16 sm:h-20">
+            <!-- Logo Section -->
+            <div class="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
+                <img src="images/logo.png" alt="Logo" class="h-8 sm:h-10 md:h-12 w-auto">
+                <span class="company-name">.skinet</span>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="hidden lg:flex space-x-6 xl:space-x-12">
+                <a href="#" class="nav-link">HOME</a>
+                <a href="#" class="nav-link">SHOP</a>
+                <a href="#" class="nav-link">CONTACT</a>
+            </nav>
+
+            <!-- Right Section -->
+            <div class="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
+                <!-- Shopping Cart -->
+                <button class="cart-btn" 
+                        matBadge="5" 
+                        matBadgeSize="medium" 
+                        matBadgeColor="accent"
+                        matBadgePosition="above after">
+                    <mat-icon class="text-lg sm:text-xl">shopping_cart</mat-icon>
+                </button>
+
+                <!-- Auth Buttons - Hidden on mobile -->
+                <div class="hidden md:flex space-x-2">
+                    <button class="auth-btn login-btn">Login</button>
+                    <button class="auth-btn register-btn">Register</button>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="lg:hidden p-2 text-gray-500" (click)="toggleMobileMenu()">
+                    <mat-icon>{{mobileMenuOpen ? 'close' : 'menu'}}</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="lg:hidden" [class.hidden]="!mobileMenuOpen">
+            <div class="mobile-menu">
+                <div class="mobile-nav-section">
+                    <a href="#" class="mobile-nav-link">HOME</a>
+                    <a href="#" class="mobile-nav-link">SHOP</a>
+                    <a href="#" class="mobile-nav-link">CONTACT</a>
+                </div>
+                
+                <!-- Auth buttons section - always show in mobile menu -->
+                <div class="mobile-auth-section">
+                    <button class="mobile-auth-btn mobile-login-btn">Login</button>
+                    <button class="mobile-auth-btn mobile-register-btn">Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

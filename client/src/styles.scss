@@ -1,1 +1,33 @@
+@use '@angular/material' as mat;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
+
+// Include the common styles for Angular Material
+@include mat.core();
+
+// Define a custom theme with rounded buttons
+$custom-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+  ),
+  typography: (
+    brand-family: 'Roboto, sans-serif',
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+// Apply the theme
+@include mat.all-component-themes($custom-theme);
+
+// Custom button shape overrides
+.mat-mdc-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button {
+  .mdc-button {
+    border-radius: 6px !important;
+  }
+}
