@@ -1,0 +1,161 @@
+// Apply Montserrat font to product item
+:host {
+  font-family: 'Montserrat', sans-serif;
+  display: block;
+  height: 100%;
+}
+
+// Product card styling - consistent with header design approach
+mat-card {
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+  background-color: #FFFFFF;
+  border: 1px solid #F3F4F6;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  &:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+}
+
+.mat-mdc-card {
+  padding: 0 !important;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+// Product image styling - 1:1 aspect ratio
+mat-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  flex-shrink: 0;
+  background-color: #FFFFFF;
+}
+
+// Product content styling
+mat-card-content {
+  padding: 1rem !important;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+  @media (max-width: 768px) {
+    padding: 0.875rem !important;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.75rem !important;
+  }
+  
+  h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.25;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+    
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.75rem;
+    }
+  }
+  
+  p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #6B7280;
+    margin: 0;
+    
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+// Product actions styling
+mat-card-actions {
+  padding: 0 1rem 1rem 1rem !important;
+  margin-top: auto;
+  
+  @media (max-width: 768px) {
+    padding: 0 0.875rem 0.875rem 0.875rem !important;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0 0.75rem 0.75rem 0.75rem !important;
+  }
+  
+  .add-to-cart-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    text-transform: none;
+    letter-spacing: 0.025em;
+    width: 100%;
+    background-color: #F9FAFB !important;
+    color: #374151 !important;
+    border: 1px solid #E5E7EB !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+      padding: 0.75rem 1.25rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.75rem;
+      padding: 0.625rem 1rem;
+    }
+    
+    &:hover {
+      background-color: #F3F4F6 !important;
+      border-color: #D1D5DB !important;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    }
+    
+    &:active {
+      transform: translateY(0);
+      background-color: #E5E7EB !important;
+    }
+    
+    mat-icon {
+      margin-right: 0.5rem;
+      font-size: 1.125rem;
+      line-height: 1;
+      
+      @media (max-width: 480px) {
+        font-size: 1rem;
+        margin-right: 0.25rem;
+      }
+    }
+  }
+}
