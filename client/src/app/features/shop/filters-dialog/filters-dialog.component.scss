@@ -1,0 +1,365 @@
+// Apply Montserrat font to filters dialog
+:host {
+  font-family: 'Montserrat', sans-serif;
+}
+
+// Aggressive global overrides - target all possible Material classes
+::ng-deep {
+  // Target the dialog itself
+  .dialog-container,
+  .filters-dialog-component {
+    .mat-mdc-list-option,
+    .mdc-list-item,
+    mat-list-option,
+    .mat-list-option,
+    .mat-mdc-list-item {
+      background: transparent !important;
+      background-color: transparent !important;
+      
+      &,
+      &:hover,
+      &:focus,
+      &:active,
+      &.mdc-list-item--selected,
+      &.mdc-list-item--activated,
+      &.mat-mdc-list-option-selected,
+      &[aria-selected="true"],
+      &.mat-selected {
+        background: transparent !important;
+        background-color: transparent !important;
+      }
+      
+      // Target the inner content wrapper
+      .mdc-list-item__content,
+      .mat-mdc-list-item-content {
+        background: transparent !important;
+        background-color: transparent !important;
+      }
+    }
+    
+    // Target selection lists specifically
+    mat-selection-list,
+    .mat-mdc-selection-list {
+      .mat-mdc-list-option,
+      .mdc-list-item {
+        background: transparent !important;
+        background-color: transparent !important;
+        
+        &::before,
+        &::after {
+          display: none !important;
+        }
+      }
+    }
+  }
+}
+
+// Dialog container styling - simple and clean
+.dialog-container {
+  min-width: 500px;
+  max-width: 600px;
+  background-color: #FFFFFF;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  
+  @media (max-width: 768px) {
+    min-width: 90vw;
+    max-width: 95vw;
+  }
+}
+
+// Dialog header styling - minimal
+.dialog-header {
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  border-bottom: 1px solid #F3F4F6;
+  
+  h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #374151;
+    margin: 0;
+    text-align: center;
+    
+    @media (max-width: 768px) {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+// Filters content styling - clean layout
+.filters-content {
+  padding: 1.5rem;
+  
+  @media (max-width: 768px) {
+    padding: 1.25rem;
+  }
+  
+  .filter-section {
+    flex: 1;
+    
+    &:first-child {
+      padding-right: 1rem;
+      border-right: 1px solid #F3F4F6;
+      
+      @media (max-width: 768px) {
+        padding-right: 0.75rem;
+      }
+    }
+    
+    &:last-child {
+      padding-left: 1rem;
+      
+      @media (max-width: 768px) {
+        padding-left: 0.75rem;
+      }
+    }
+    
+    h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      margin: 0 0 1rem 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      
+      @media (max-width: 768px) {
+        font-size: 0.8rem;
+        margin-bottom: 0.875rem;
+      }
+    }
+  }
+}
+
+// Selection list styling - minimal and clean with aggressive overrides
+::ng-deep mat-selection-list {
+  padding: 0 !important;
+  
+  mat-list-option {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    color: #6B7280 !important;
+    padding: 0.5rem 0 !important;
+    min-height: auto !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    
+    @media (max-width: 768px) {
+      font-size: 0.8rem !important;
+      padding: 0.375rem 0 !important;
+    }
+    
+    // Aggressive override for ALL possible states
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.mdc-list-item--activated,
+    &.mdc-list-item--selected,
+    &.mdc-list-item--focused,
+    &.mat-list-item-focus,
+    &.mat-list-option,
+    &[aria-selected="true"] {
+      background-color: transparent !important;
+      background: transparent !important;
+    }
+    
+    &.mdc-list-item--selected {
+      color: #374151 !important;
+      font-weight: 500 !important;
+      background-color: transparent !important;
+      background: transparent !important;
+      
+      &,
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: transparent !important;
+        background: transparent !important;
+        color: #374151 !important;
+      }
+      
+      .mdc-checkbox {
+        .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background {
+          background-color: #6B7280 !important;
+          border-color: #6B7280 !important;
+        }
+      }
+    }
+    
+    .mdc-list-item__primary-text {
+      font-family: 'Montserrat', sans-serif !important;
+      font-size: inherit !important;
+      color: inherit !important;
+    }
+    
+    // Completely disable all Material effects
+    .mdc-list-item__ripple,
+    .mdc-list-item__overlay,
+    .mat-ripple,
+    .mat-ripple-element {
+      display: none !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      opacity: 0 !important;
+    }
+    
+    // Override the actual element backgrounds
+    .mdc-list-item {
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+    
+    // Simple checkbox styling
+    .mdc-checkbox {
+      margin-right: 0.75rem !important;
+      
+      .mdc-checkbox__background {
+        border-color: #D1D5DB !important;
+        border-radius: 0.25rem !important;
+        width: 16px !important;
+        height: 16px !important;
+      }
+      
+      .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background {
+        background-color: #6B7280 !important;
+        border-color: #6B7280 !important;
+      }
+      
+      .mdc-checkbox__checkmark-path {
+        stroke: #FFFFFF !important;
+      }
+    }
+  }
+}
+
+// Additional global overrides for this component
+::ng-deep .filters-dialog-component {
+  .mat-mdc-list-option {
+    background: transparent !important;
+    background-color: transparent !important;
+    
+    &:hover,
+    &:focus,
+    &.mdc-list-item--selected {
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+  }
+}
+
+// Dialog actions styling - simple
+.dialog-actions {
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  border-top: 1px solid #F3F4F6;
+  
+  @media (max-width: 768px) {
+    padding: 0.875rem 1.25rem 1.25rem 1.25rem;
+  }
+  
+  .apply-btn, .clear-btn {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 0.5rem !important;
+    transition: all 0.2s ease !important;
+    text-transform: none !important;
+    letter-spacing: 0.025em !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    
+    @media (max-width: 768px) {
+      font-size: 0.8rem !important;
+      padding: 0.625rem 1.25rem !important;
+      gap: 0.375rem !important;
+    }
+    
+    mat-icon {
+      font-size: 1rem !important;
+      width: 1rem !important;
+      height: 1rem !important;
+      margin: 0 !important;
+      
+      @media (max-width: 768px) {
+        font-size: 0.875rem !important;
+        width: 0.875rem !important;
+        height: 0.875rem !important;
+      }
+    }
+  }
+  
+  .apply-btn {
+    background-color: #F9FAFB !important;
+    color: #374151 !important;
+    border: 1px solid #E5E7EB !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+    
+    &:hover {
+      background-color: #F3F4F6 !important;
+      border-color: #D1D5DB !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    &:active {
+      transform: translateY(0) !important;
+      background-color: #E5E7EB !important;
+    }
+  }
+  
+  .clear-btn {
+    background-color: transparent !important;
+    color: #6B7280 !important;
+    border: 1px solid #E5E7EB !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+    
+    mat-icon {
+      color: #6B7280 !important;
+    }
+    
+    &:hover {
+      background-color: #F9FAFB !important;
+      border-color: #D1D5DB !important;
+      color: #374151 !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1) !important;
+      
+      mat-icon {
+        color: #374151 !important;
+      }
+    }
+    
+    &:active {
+      transform: translateY(0) !important;
+      background-color: #F3F4F6 !important;
+    }
+  }
+}
+
+// Mobile responsive adjustments
+@media (max-width: 640px) {
+  .filters-content {
+    flex-direction: column;
+    gap: 1.5rem;
+    
+    .filter-section {
+      &:first-child {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid #F3F4F6;
+        padding-bottom: 1rem;
+      }
+      
+      &:last-child {
+        padding-left: 0;
+        padding-top: 0.5rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+<div class="dialog-container filters-dialog-component">
+    <div class="dialog-header">
+        <h3>Filters</h3>
+    </div>
+    
+    <div class="filters-content flex">
+        <div class="filter-section">
+            <h4>Brands</h4>
+            <mat-selection-list [(ngModel)]="selectedBrands" [multiple]="true" [hideSingleSelectionIndicator]="true">
+                @for (brand of shopService.brands; track $index) {
+                    <mat-list-option [value]="brand" [disableRipple]="true">{{brand}}</mat-list-option>
+                }
+            </mat-selection-list>
+        </div>
+
+        <div class="filter-section">
+            <h4>Types</h4>
+            <mat-selection-list [(ngModel)]="selectedTypes" [multiple]="true" [hideSingleSelectionIndicator]="true">
+                @for (type of shopService.types; track $index) {
+                    <mat-list-option [value]="type" [disableRipple]="true">{{type}}</mat-list-option>
+                }
+            </mat-selection-list>
+        </div>
+    </div>
+    
+    <div class="dialog-actions flex justify-end gap-3">
+        <button mat-stroked-button class="clear-btn" (click)="clearFilters()">
+            <mat-icon>close</mat-icon>
+            Clear
+        </button>
+        <button mat-flat-button class="apply-btn" (click)="applyFilters()">Apply Filters</button>
+    </div>
+</div>
