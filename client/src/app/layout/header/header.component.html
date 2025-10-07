@@ -9,9 +9,9 @@
 
             
             <nav class="hidden lg:flex space-x-6 xl:space-x-12">
-                <a href="#" class="nav-link">HOME</a>
-                <a href="#" class="nav-link">SHOP</a>
-                <a href="#" class="nav-link">CONTACT</a>
+                <a routerLink="/" class="nav-link" routerLinkActive="nav-link-active" [routerLinkActiveOptions]="{exact: true}">HOME</a>
+                <a routerLink="/shop" class="nav-link" routerLinkActive="nav-link-active">SHOP</a>
+                <a routerLink="/contact" class="nav-link" routerLinkActive="nav-link-active">CONTACT</a>
             </nav>
 
             <!-- Right Section -->

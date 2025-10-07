@@ -3,6 +3,13 @@ header {
   font-family: 'Montserrat', sans-serif;
 }
 
+// Simple gray divider line
+.header-divider {
+  height: 1px;
+  background-color: #E5E7EB;
+  width: 100%;
+}
+
 // Header container - responsive width and centered
 .header-container {
   width: 80%;
@@ -51,9 +58,17 @@ header {
   text-decoration: none;
   letter-spacing: 0.025em;
   transition: color 0.2s ease;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid transparent;
   
   &:hover {
     color: #374151;
+  }
+  
+  &.nav-link-active {
+    color: #374151;
+    border-bottom-color: #D1D5DB; // Gray underline for active page
+    font-weight: 600;
   }
 }
 
