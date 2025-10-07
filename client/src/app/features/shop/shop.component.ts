@@ -7,6 +7,7 @@ import { FiltersDialogComponent } from './filters-dialog/filters-dialog.componen
 import { MatIcon } from '@angular/material/icon';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -14,7 +15,7 @@ import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angula
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [ProductItemComponent, MatIcon, MatMenu, MatSelectionList, MatListOption, MatMenuTrigger],
+  imports: [ProductItemComponent, MatIcon, MatMenu, MatSelectionList, MatListOption, MatMenuTrigger, FormsModule],
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss']
 })
@@ -25,6 +26,7 @@ export class ShopComponent implements OnInit {
   selectedBrands: string[] = [];
   selectedTypes: string[] = [];
   selectedSort: string = 'name';
+  searchTerm: string = '';
   sortOptions = [
     { name: 'Alphabetical', value: 'name' },
     { name: 'Price: Low to High', value: 'priceAsc' },
@@ -43,10 +45,14 @@ export class ShopComponent implements OnInit {
   }
   
   getProducts() {
-    this.shopService.getProducts(this.selectedBrands, this.selectedTypes, this.selectedSort).subscribe({
+    this.shopService.getProducts(this.selectedBrands, this.selectedTypes, this.selectedSort, this.searchTerm).subscribe({
       next: response => this.products = response.data,
       error: error => console.log(error)
     })
+  }
+
+  onSearchChange() {
+    this.getProducts();
   }
 
   onSortChange(event: MatSelectionListChange) {

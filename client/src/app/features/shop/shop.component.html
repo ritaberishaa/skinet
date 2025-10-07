@@ -1,14 +1,28 @@
 <div class="flex flex-col gap-3">
     <div class="controls-container">
-        <div class="flex justify-start gap-4">
-            <button mat-stroked-button class="filter-btn" (click)="openFiltersDialog()">
-                <mat-icon>filter_list</mat-icon>
-                Filters
-            </button>
-            <button mat-stroked-button class="sort-btn" [mat-menu-trigger-for]="sortMenu">
-                <mat-icon>swap_vert</mat-icon>
-                Sort
-            </button>
+        <div class="flex items-center gap-4">
+            <div class="search-container flex-1">
+                <div class="search-input-wrapper">
+                    <mat-icon class="search-icon">search</mat-icon>
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        placeholder="Search products..." 
+                        [(ngModel)]="searchTerm"
+                        (input)="onSearchChange()"
+                    />
+                </div>
+            </div>
+            <div class="buttons-container flex gap-4">
+                <button mat-stroked-button class="filter-btn" (click)="openFiltersDialog()">
+                    <mat-icon>filter_list</mat-icon>
+                    Filters
+                </button>
+                <button mat-stroked-button class="sort-btn" [mat-menu-trigger-for]="sortMenu">
+                    <mat-icon>swap_vert</mat-icon>
+                    Sort
+                </button>
+            </div>
         </div>
     </div>
     
