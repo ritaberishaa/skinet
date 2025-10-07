@@ -1,1 +1,55 @@
-<p>product-details works!</p>
+@if (product) {
+  <div class="product-details-container">
+    <!-- Back Button -->
+    <div class="back-button-container">
+      <button mat-stroked-button class="back-btn" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Shop
+      </button>
+    </div>
+
+    <!-- Product Details -->
+    <div class="product-details-content">
+      <!-- Product Image -->
+      <div class="product-image-container">
+        <img [src]="product.pictureUrl" [alt]="product.name" class="product-image">
+      </div>
+
+      <!-- Product Information -->
+      <div class="product-info">
+        <div class="product-header">
+          <h1 class="product-title">{{ product.name }}</h1>
+          <p class="product-price">{{ product.price | currency }}</p>
+        </div>
+
+        <div class="product-meta">
+          <div class="meta-item">
+            <span class="meta-label">Brand:</span>
+            <span class="meta-value">{{ product.brand }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Type:</span>
+            <span class="meta-value">{{ product.type }}</span>
+          </div>
+        </div>
+
+        <div class="product-description">
+          <h3 class="description-title">Description</h3>
+          <p class="description-text">{{ product.description }}</p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="product-actions">
+          <button mat-flat-button class="add-to-cart-btn">
+            <mat-icon>add_shopping_cart</mat-icon>
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="loading-container">
+    <p class="loading-text">Loading product...</p>
+  </div>
+}
