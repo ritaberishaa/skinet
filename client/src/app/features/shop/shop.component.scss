@@ -116,6 +116,101 @@
   flex-shrink: 0;
 }
 
+// Pagination container styling
+.pagination-container {
+  margin: 2rem 0 0 0;
+  padding: 0;
+  
+  @media (max-width: 768px) {
+    margin: 1.5rem 0 0 0;
+  }
+  
+  @media (max-width: 480px) {
+    margin: 1rem 0 0 0;
+  }
+}
+
+// Custom paginator styling
+::ng-deep .custom-paginator {
+  font-family: 'Montserrat', sans-serif !important;
+  background: transparent !important;
+  
+  .mat-mdc-paginator-container {
+    padding: 1rem 0 !important;
+    justify-content: flex-start !important; // Position on the left
+    
+    @media (max-width: 768px) {
+      padding: 0.75rem 0 !important;
+    }
+  }
+  
+  .mat-mdc-paginator-range-label {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    color: #6B7280 !important;
+    margin: 0 1rem !important;
+    
+    @media (max-width: 768px) {
+      font-size: 0.8rem !important;
+      margin: 0 0.5rem !important;
+    }
+  }
+  
+  .mat-mdc-paginator-page-size-label {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    color: #6B7280 !important;
+    
+    @media (max-width: 768px) {
+      font-size: 0.8rem !important;
+    }
+  }
+  
+  .mat-mdc-select {
+    font-family: 'Montserrat', sans-serif !important;
+    
+    .mat-mdc-select-value {
+      font-size: 0.875rem !important;
+      color: #374151 !important;
+      
+      @media (max-width: 768px) {
+        font-size: 0.8rem !important;
+      }
+    }
+  }
+  
+  .mat-mdc-icon-button {
+    color: #6B7280 !important;
+    transition: all 0.2s ease !important;
+    
+    &:hover:not([disabled]) {
+      background-color: #F9FAFB !important;
+      color: #374151 !important;
+    }
+    
+    &[disabled] {
+      color: #D1D5DB !important;
+    }
+    
+    .mat-mdc-button-ripple {
+      border-radius: 50% !important;
+    }
+  }
+  
+  // Hide page size selector on very small screens
+  @media (max-width: 480px) {
+    .mat-mdc-paginator-page-size {
+      display: none !important;
+    }
+    
+    .mat-mdc-paginator-range-actions {
+      justify-content: center !important;
+    }
+  }
+}
+
 // Filter and sort buttons styling
 .filter-btn, .sort-btn {
   font-family: 'Montserrat', sans-serif !important;

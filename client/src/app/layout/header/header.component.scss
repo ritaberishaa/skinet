@@ -124,13 +124,37 @@ header {
   font-size: 11px;
 }
 
-// Mobile menu
+// Mobile menu - overlay style below header
 .mobile-menu {
-  background-color: #FFFFFF;
-  border-top: 1px solid #E5E7EB;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  animation: slideDown 0.3s ease-out;
-  margin: 0 -1rem; // Extend to container edges
+  position: fixed;
+  top: 4rem; // Below header (64px)
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease-out;
+  
+  @media (min-width: 640px) {
+    top: 5rem; // Below larger header (80px)
+  }
+  
+  .mobile-menu-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #FFFFFF;
+    border-top: 1px solid #E5E7EB;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.3s ease-out;
+    max-height: calc(70vh - 4rem);
+    overflow-y: auto;
+    
+    @media (min-width: 640px) {
+      max-height: calc(70vh - 5rem);
+    }
+  }
 }
 
 // Mobile navigation section
@@ -213,6 +237,15 @@ header {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

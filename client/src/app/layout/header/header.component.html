@@ -25,8 +25,8 @@
                     <mat-icon class="text-lg sm:text-xl">shopping_cart</mat-icon>
                 </button>
 
-                <!-- Auth Buttons - Hidden on mobile -->
-                <div class="hidden md:flex space-x-2">
+                <!-- Auth Buttons - Hidden on mobile and tablet -->
+                <div class="hidden lg:flex space-x-2">
                     <button class="auth-btn login-btn">Login</button>
                     <button class="auth-btn register-btn">Register</button>
                 </div>
@@ -40,17 +40,19 @@
 
         <!-- Mobile Menu -->
         <div class="lg:hidden" [class.hidden]="!mobileMenuOpen">
-            <div class="mobile-menu">
-                <div class="mobile-nav-section">
-                    <a href="#" class="mobile-nav-link">HOME</a>
-                    <a href="#" class="mobile-nav-link">SHOP</a>
-                    <a href="#" class="mobile-nav-link">CONTACT</a>
-                </div>
-                
-                <!-- Auth buttons section - always show in mobile menu -->
-                <div class="mobile-auth-section">
-                    <button class="mobile-auth-btn mobile-login-btn">Login</button>
-                    <button class="mobile-auth-btn mobile-register-btn">Register</button>
+            <div class="mobile-menu" (click)="closeMobileMenu()">
+                <div class="mobile-menu-content" (click)="$event.stopPropagation()">
+                    <div class="mobile-nav-section">
+                        <a href="#" class="mobile-nav-link" (click)="closeMobileMenu()">HOME</a>
+                        <a href="#" class="mobile-nav-link" (click)="closeMobileMenu()">SHOP</a>
+                        <a href="#" class="mobile-nav-link" (click)="closeMobileMenu()">CONTACT</a>
+                    </div>
+                    
+                    <!-- Auth buttons section - always show in mobile menu -->
+                    <div class="mobile-auth-section">
+                        <button class="mobile-auth-btn mobile-login-btn" (click)="closeMobileMenu()">Login</button>
+                        <button class="mobile-auth-btn mobile-register-btn" (click)="closeMobileMenu()">Register</button>
+                    </div>
                 </div>
             </div>
         </div>
