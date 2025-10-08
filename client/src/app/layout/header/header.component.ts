@@ -4,6 +4,8 @@ import { MatBadge} from "@angular/material/badge";
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
+import { BusyService } from '../../core/services/busy.service';
+import { MatProgressBar } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-header',
@@ -13,13 +15,15 @@ import { filter, map } from 'rxjs/operators';
     MatBadge,
     CommonModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    MatProgressBar
 ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   private router = inject(Router);
+  busyService = inject(BusyService);
   mobileMenuOpen = false;
   currentPage = 'HOME';
 

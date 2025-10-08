@@ -10,6 +10,54 @@ header {
   width: 100%;
 }
 
+// Custom progress bar styling
+::ng-deep .mat-mdc-progress-bar {
+  height: 1px !important;
+  
+  .mdc-linear-progress__buffer {
+    background-color: transparent !important; // Remove background
+  }
+  
+  .mdc-linear-progress__bar-inner {
+    background-color: #D1D5DB !important; // Light gray color
+  }
+  
+  .mdc-linear-progress__primary-bar {
+    background-color: #D1D5DB !important; // Light gray color
+  }
+  
+  .mdc-linear-progress__secondary-bar {
+    background-color: #E5E7EB !important; // Even lighter gray
+  }
+  
+  // Additional overrides to ensure gray color
+  .mdc-linear-progress__bar {
+    .mdc-linear-progress__bar-inner {
+      background-color: #D1D5DB !important;
+    }
+  }
+  
+  // Override any theme colors
+  &.mat-accent .mdc-linear-progress__bar-inner,
+  &.mat-primary .mdc-linear-progress__bar-inner,
+  &.mat-warn .mdc-linear-progress__bar-inner {
+    background-color: #D1D5DB !important;
+  }
+  
+  // Override the actual progress bar elements
+  .mdc-linear-progress__buffer-bar {
+    background-color: transparent !important;
+  }
+  
+  .mdc-linear-progress__buffer-dots {
+    background-color: #E5E7EB !important;
+  }
+  
+  @media (max-width: 480px) {
+    height: 1px !important; 
+  }
+}
+
 // Header container - responsive width and centered
 .header-container {
   width: 80%;
