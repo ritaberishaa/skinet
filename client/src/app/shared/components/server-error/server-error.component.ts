@@ -1,11 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { MatCard } from '@angular/material/card';
-import { Router } from '@angular/router';
+import { MatButton } from '@angular/material/button';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-server-error',
-  imports: [MatCard],
+  imports: [MatButton, RouterLink],
   templateUrl: './server-error.component.html',
   styleUrl: './server-error.component.scss'
 })
