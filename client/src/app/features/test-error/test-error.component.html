@@ -1,7 +1,46 @@
-<div class="mt-5 flex justify-center gap-4">
-    <button mat-stroked-button (click)="get500Error()">Test 500 error</button>
-    <button mat-stroked-button (click)="get404Error()">Test 404 error</button>
-    <button mat-stroked-button (click)="get400Error()">Test 400 error</button>
-    <button mat-stroked-button (click)="get401Error()">Test 401 error</button>
-    <button mat-stroked-button (click)="get400ValidationError()">Test 400 Validation error</button>
+<div class="test-error-container">
+  <h2 class="test-title">Error & Snackbar Testing</h2>
+  
+  <!-- HTTP Error Tests -->
+  <div class="test-section">
+    <h3 class="section-title">HTTP Error Tests</h3>
+    <p class="section-description">These buttons test different HTTP error responses and will show error snackbars:</p>
+    <div class="button-grid">
+      <button mat-stroked-button class="test-btn error-btn" (click)="get400Error()">
+        Test 400 Error
+      </button>
+      <button mat-stroked-button class="test-btn error-btn" (click)="get401Error()">
+        Test 401 Error
+      </button>
+      <button mat-stroked-button class="test-btn error-btn" (click)="get404Error()">
+        Test 404 Error
+      </button>
+      <button mat-stroked-button class="test-btn error-btn" (click)="get500Error()">
+        Test 500 Error
+      </button>
+      <button mat-stroked-button class="test-btn error-btn" (click)="get400ValidationError()">
+        Test 400 Validation
+      </button>
+      <button mat-stroked-button class="test-btn error-btn" (click)="testNetworkError()">
+        Test Network Error
+      </button>
+    </div>
+  </div>
+
+  <!-- Snackbar Tests -->
+  <div class="test-section">
+    <h3 class="section-title">Toast Notification Tests</h3>
+    <p class="section-description">These buttons test different toast notification styles with beautiful animations:</p>
+    <div class="button-grid">
+      <button mat-stroked-button class="test-btn success-btn" (click)="testSuccessMessage()">
+        Test Success Toast
+      </button>
+      <button mat-stroked-button class="test-btn info-btn" (click)="testInfoMessage()">
+        Test Info Toast
+      </button>
+      <button mat-stroked-button class="test-btn warning-btn" (click)="testWarningMessage()">
+        Test Warning Toast
+      </button>
+    </div>
+  </div>
 </div>

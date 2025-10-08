@@ -1,0 +1,262 @@
+// Apply Montserrat font to test error component
+:host {
+  font-family: 'Montserrat', sans-serif;
+}
+
+// Main container - matches your project's container style
+.test-error-container {
+  width: 80%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  
+  @media (max-width: 1024px) {
+    width: 90%;
+    padding: 1.5rem 0.75rem;
+  }
+  
+  @media (max-width: 768px) {
+    width: 95%;
+    padding: 1rem 0.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: 1rem 0.25rem;
+  }
+}
+
+// Main title styling
+.test-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #374151;
+  text-align: center;
+  margin: 0 0 2rem 0;
+  letter-spacing: -0.025em;
+  
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+// Test section styling
+.test-section {
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Section title styling
+.section-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: 0.025em;
+  
+  @media (max-width: 768px) {
+    font-size: 1.125rem;
+    margin-bottom: 0.625rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+// Section description styling
+.section-description {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #6B7280;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+}
+
+// Button grid layout
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.875rem;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+// Base test button styling
+.test-btn {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  padding: 1rem 1.5rem !important;
+  border-radius: 0.5rem !important;
+  text-transform: none !important;
+  letter-spacing: 0.025em !important;
+  transition: all 0.2s ease !important;
+  border-width: 1px !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem !important;
+    padding: 0.875rem 1.25rem !important;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.75rem !important;
+    padding: 0.75rem 1rem !important;
+  }
+  
+  &:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  }
+  
+  &:active {
+    transform: translateY(0) !important;
+  }
+}
+
+// Error button styling - red theme
+.error-btn {
+  background-color: #FEF2F2 !important;
+  border-color: #FCA5A5 !important;
+  color: #B91C1C !important;
+  
+  &:hover {
+    background-color: #FEE2E2 !important;
+    border-color: #F87171 !important;
+    color: #991B1B !important;
+  }
+  
+  &:active {
+    background-color: #FECACA !important;
+    border-color: #EF4444 !important;
+    color: #7F1D1D !important;
+  }
+}
+
+// Success button styling - green theme
+.success-btn {
+  background-color: #F0FDF4 !important;
+  border-color: #86EFAC !important;
+  color: #15803D !important;
+  
+  &:hover {
+    background-color: #DCFCE7 !important;
+    border-color: #4ADE80 !important;
+    color: #166534 !important;
+  }
+  
+  &:active {
+    background-color: #BBF7D0 !important;
+    border-color: #22C55E !important;
+    color: #14532D !important;
+  }
+}
+
+// Info button styling - blue theme
+.info-btn {
+  background-color: #F0F9FF !important;
+  border-color: #7DD3FC !important;
+  color: #0369A1 !important;
+  
+  &:hover {
+    background-color: #E0F2FE !important;
+    border-color: #38BDF8 !important;
+    color: #075985 !important;
+  }
+  
+  &:active {
+    background-color: #BAE6FD !important;
+    border-color: #0EA5E9 !important;
+    color: #0C4A6E !important;
+  }
+}
+
+// Warning button styling - yellow theme
+.warning-btn {
+  background-color: #FFFBEB !important;
+  border-color: #FCD34D !important;
+  color: #B45309 !important;
+  
+  &:hover {
+    background-color: #FEF3C7 !important;
+    border-color: #FBBF24 !important;
+    color: #92400E !important;
+  }
+  
+  &:active {
+    background-color: #FDE68A !important;
+    border-color: #F59E0B !important;
+    color: #78350F !important;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 640px) {
+  .button-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Animation for button interactions
+@keyframes buttonPress {
+  0% {
+    transform: translateY(-1px);
+  }
+  50% {
+    transform: translateY(1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.test-btn:active {
+  animation: buttonPress 0.1s ease-in-out;
+}
