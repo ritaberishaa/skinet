@@ -40,11 +40,11 @@ export class ToastService {
     this.addToast('success', message, duration);
   }
 
-  error(message: string, duration: number = 6000) {
+  error(message: string, duration: number = 4000) {
     this.addToast('error', message, duration);
   }
 
-  warning(message: string, duration: number = 5000) {
+  warning(message: string, duration: number = 4000) {
     this.addToast('warning', message, duration);
   }
 

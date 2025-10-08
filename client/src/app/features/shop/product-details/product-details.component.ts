@@ -30,8 +30,7 @@ export class ProductDetailsComponent implements OnInit {
     this.shopService.getProduct(+id).subscribe({
       next: product => this.product = product,
       error: error => {
-        // Error is now handled by the error interceptor
-        // which will show appropriate toast messages
+        this.toastService.error('Failed to load product details. Please try again later.');
       }
     })
   }
@@ -41,7 +40,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   addToCart() {
-    // For now, just show a success message
     this.toastService.success('Product added to cart successfully!');
   }
 }

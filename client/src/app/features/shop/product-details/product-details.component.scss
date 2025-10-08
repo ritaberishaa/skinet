@@ -1,9 +1,7 @@
-// Apply Montserrat font to product details
 :host {
   font-family: 'Montserrat', sans-serif;
 }
 
-// Main container - matches your shop container style
 .product-details-container {
   width: 80%;
   max-width: 1200px;
@@ -92,7 +90,7 @@
   }
 }
 
-// Product image styling - no container
+// Product image styling 
 .product-image-container {
   display: flex;
   justify-content: center;
