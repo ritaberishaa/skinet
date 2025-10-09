@@ -1,0 +1,133 @@
+{
+  "name": "New Product Notification",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-product",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        20,
+        300
+      ],
+      "webhookId": "new-product-webhook"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5000/api/webhook/product-created",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"productId\": {{ $json.body.id }},\n  \"productName\": \"{{ $json.body.name }}\",\n  \"price\": {{ $json.body.price }},\n  \"brand\": \"{{ $json.body.brand }}\",\n  \"type\": \"{{ $json.body.type }}\",\n  \"createdAt\": \"{{ $now }}\",\n  \"message\": \"New product added to catalog\"\n}",
+        "options": {}
+      },
+      "id": "2",
+      "name": "Notify API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendEmail",
+        "email": "marketing@skinet.com",
+        "subject": "=New Product Added: {{ $json.body.name }}",
+        "message": "=A new product has been added to the catalog:\n\nProduct Name: {{ $json.body.name }}\nPrice: ${{ $json.body.price }}\nBrand: {{ $json.body.brand }}\nType: {{ $json.body.type }}\nDescription: {{ $json.body.description }}\n\nThis product is now available for customers.",
+        "options": {}
+      },
+      "id": "3",
+      "name": "Email Marketing Team",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        460,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "text": "=🆕 New Product Alert!\n\n{{ $json.body.name }} is now available!\n💰 Price: ${{ $json.body.price }}\n🏷️ Brand: {{ $json.body.brand }}\n📦 Type: {{ $json.body.type }}\n\n#NewProduct #Skinet #ECommerce",
+        "options": {}
+      },
+      "id": "4",
+      "name": "Post to Twitter",
+      "type": "n8n-nodes-base.twitter",
+      "typeVersion": 2,
+      "position": [
+        460,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": \"New product added to Skinet!\",\n  \"attachments\": [\n    {\n      \"color\": \"good\",\n      \"fields\": [\n        {\n          \"title\": \"Product Name\",\n          \"value\": \"{{ $json.body.name }}\",\n          \"short\": true\n        },\n        {\n          \"title\": \"Price\",\n          \"value\": \"${{ $json.body.price }}\",\n          \"short\": true\n        },\n        {\n          \"title\": \"Brand\",\n          \"value\": \"{{ $json.body.brand }}\",\n          \"short\": true\n        },\n        {\n          \"title\": \"Type\",\n          \"value\": \"{{ $json.body.type }}\",\n          \"short\": true\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "id": "5",
+      "name": "Slack Notification",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        680,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Notify API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify API": {
+      "main": [
+        [
+          {
+            "node": "Email Marketing Team",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Post to Twitter",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Slack Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "2",
+  "tags": []
+}

@@ -1,0 +1,184 @@
+{
+  "name": "Order Processing Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "order-placed",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Order Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [
+        20,
+        300
+      ],
+      "webhookId": "order-placed-webhook"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5000/api/webhook/order-placed",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"orderId\": \"{{ $json.body.orderId }}\",\n  \"customerEmail\": \"{{ $json.body.customerEmail }}\",\n  \"totalAmount\": {{ $json.body.totalAmount }},\n  \"items\": {{ JSON.stringify($json.body.items) }},\n  \"orderDate\": \"{{ $now }}\",\n  \"status\": \"processing\"\n}",
+        "options": {}
+      },
+      "id": "2",
+      "name": "Log Order",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendEmail",
+        "email": "={{ $json.body.customerEmail }}",
+        "subject": "=Order Confirmation - #{{ $json.body.orderId }}",
+        "message": "=Dear Customer,\n\nThank you for your order! We're excited to confirm that we've received your order and it's being processed.\n\nOrder Details:\nOrder ID: {{ $json.body.orderId }}\nTotal Amount: ${{ $json.body.totalAmount }}\nOrder Date: {{ $now }}\n\nWe'll send you another email with tracking information once your order ships.\n\nThank you for shopping with Skinet!\n\nBest regards,\nThe Skinet Team",
+        "options": {}
+      },
+      "id": "3",
+      "name": "Send Confirmation Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        460,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.body.totalAmount }}",
+              "rightValue": 100,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4",
+      "name": "Check High Value Order",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        460,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendEmail",
+        "email": "sales@skinet.com",
+        "subject": "=High Value Order Alert - ${{ $json.body.totalAmount }}",
+        "message": "=A high-value order has been placed:\n\nOrder ID: {{ $json.body.orderId }}\nCustomer: {{ $json.body.customerEmail }}\nAmount: ${{ $json.body.totalAmount }}\nDate: {{ $now }}\n\nPlease review for priority processing.",
+        "options": {}
+      },
+      "id": "5",
+      "name": "Alert Sales Team",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        680,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5000/api/products",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.body.items.map(item => ({\n  productId: item.productId,\n  quantityOrdered: item.quantity,\n  orderId: $json.body.orderId\n}))) }}",
+        "options": {}
+      },
+      "id": "6",
+      "name": "Update Inventory",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        680,
+        200
+      ]
+    }
+  ],
+  "connections": {
+    "Order Webhook": {
+      "main": [
+        [
+          {
+            "node": "Log Order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Order": {
+      "main": [
+        [
+          {
+            "node": "Send Confirmation Email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Check High Value Order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Confirmation Email": {
+      "main": [
+        [
+          {
+            "node": "Update Inventory",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check High Value Order": {
+      "main": [
+        [
+          {
+            "node": "Alert Sales Team",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "3",
+  "tags": []
+}

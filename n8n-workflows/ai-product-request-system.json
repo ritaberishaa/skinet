@@ -1,0 +1,298 @@
+{
+  "name": "AI Product Request System",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "product-request-submitted",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Product Request Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [20, 300],
+      "webhookId": "product-request-webhook"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": "YOUR_GOOGLE_SHEET_ID",
+        "sheetName": "Product Requests",
+        "columnToMatchOn": "Request ID",
+        "valueToMatchOn": "={{ $json.body.requestId || $now }}",
+        "options": {}
+      },
+      "id": "2",
+      "name": "Save to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.body.productName }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "isNotEmpty"
+              }
+            },
+            {
+              "id": "2",
+              "leftValue": "={{ $json.body.description }}",
+              "rightValue": 50,
+              "operator": {
+                "type": "string",
+                "operation": "lengthGt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "3",
+      "name": "Validate Request Quality",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "headerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_OPENAI_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"gpt-3.5-turbo\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a product analyst for an e-commerce store. Analyze product requests and provide: 1) Market viability score (1-10), 2) Enhanced product description, 3) Suggested improvements, 4) Target audience insights.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Product: {{ $json.body.productName }}\\nDescription: {{ $json.body.description }}\\nCategory: {{ $json.body.category }}\\nPrice Range: {{ $json.body.priceRange }}\\nCustomer Reason: {{ $json.body.purchaseReason }}\"\n    }\n  ],\n  \"max_tokens\": 500,\n  \"temperature\": 0.7\n}",
+        "options": {}
+      },
+      "id": "4",
+      "name": "AI Analysis (OpenAI)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [740, 200]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "1",
+              "leftValue": "={{ $json.choices[0].message.content }}",
+              "rightValue": "viability.*([8-9]|10)",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "5",
+      "name": "Check AI Score",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [980, 200]
+    },
+    {
+      "parameters": {
+        "operation": "sendEmail",
+        "email": "admin@skinet.com",
+        "subject": "=🌟 High-Potential Product Request: {{ $('Product Request Webhook').item.json.body.productName }}",
+        "message": "=A high-potential product request has been submitted!\n\n📦 Product: {{ $('Product Request Webhook').item.json.body.productName }}\n👤 Customer: {{ $('Product Request Webhook').item.json.body.customerName }} ({{ $('Product Request Webhook').item.json.body.customerEmail }})\n🏷️ Category: {{ $('Product Request Webhook').item.json.body.category }}\n💰 Price Range: {{ $('Product Request Webhook').item.json.body.priceRange }}\n\n📝 Description:\n{{ $('Product Request Webhook').item.json.body.description }}\n\n🤖 AI Analysis:\n{{ $json.choices[0].message.content }}\n\n✅ This request scored highly and should be prioritized for review!\n\nReview at: http://localhost:4200/admin/product-requests",
+        "options": {}
+      },
+      "id": "6",
+      "name": "Notify Admin (High Priority)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [1220, 100]
+    },
+    {
+      "parameters": {
+        "operation": "sendEmail",
+        "email": "={{ $('Product Request Webhook').item.json.body.customerEmail }}",
+        "subject": "=Thank you for your product suggestion: {{ $('Product Request Webhook').item.json.body.productName }}",
+        "message": "=Hi {{ $('Product Request Webhook').item.json.body.customerName }},\n\nThank you for suggesting {{ $('Product Request Webhook').item.json.body.productName }} for our store!\n\nWe've received your request and our team will review it carefully. Here's what happens next:\n\n✅ Your request has been logged in our system\n🤖 Our AI has analyzed the market potential\n👥 Our product team will review within 3-5 business days\n📧 You'll receive updates on the status\n\nRequest Details:\n• Product: {{ $('Product Request Webhook').item.json.body.productName }}\n• Category: {{ $('Product Request Webhook').item.json.body.category }}\n• Submitted: {{ $now }}\n\nWe appreciate customers like you who help us improve our product selection!\n\nBest regards,\nThe Skinet Team",
+        "options": {}
+      },
+      "id": "7",
+      "name": "Send Confirmation Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [740, 400]
+    },
+    {
+      "parameters": {
+        "operation": "sendEmail",
+        "email": "admin@skinet.com",
+        "subject": "=📋 Standard Product Request: {{ $('Product Request Webhook').item.json.body.productName }}",
+        "message": "=A new product request has been submitted:\n\n📦 Product: {{ $('Product Request Webhook').item.json.body.productName }}\n👤 Customer: {{ $('Product Request Webhook').item.json.body.customerName }} ({{ $('Product Request Webhook').item.json.body.customerEmail }})\n🏷️ Category: {{ $('Product Request Webhook').item.json.body.category }}\n💰 Price Range: {{ $('Product Request Webhook').item.json.body.priceRange }}\n\n📝 Description:\n{{ $('Product Request Webhook').item.json.body.description }}\n\n🤖 AI Analysis:\n{{ $json.choices[0].message.content }}\n\nReview at: http://localhost:4200/admin/product-requests",
+        "options": {}
+      },
+      "id": "8",
+      "name": "Notify Admin (Standard)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [1220, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": \"🌟 High-Priority Product Request!\",\n  \"attachments\": [\n    {\n      \"color\": \"good\",\n      \"fields\": [\n        {\n          \"title\": \"Product\",\n          \"value\": \"{{ $('Product Request Webhook').item.json.body.productName }}\",\n          \"short\": true\n        },\n        {\n          \"title\": \"Category\",\n          \"value\": \"{{ $('Product Request Webhook').item.json.body.category }}\",\n          \"short\": true\n        },\n        {\n          \"title\": \"Customer\",\n          \"value\": \"{{ $('Product Request Webhook').item.json.body.customerName }}\",\n          \"short\": true\n        },\n        {\n          \"title\": \"AI Score\",\n          \"value\": \"High Potential (8+/10)\",\n          \"short\": true\n        }\n      ],\n      \"actions\": [\n        {\n          \"type\": \"button\",\n          \"text\": \"Review Request\",\n          \"url\": \"http://localhost:4200/admin/product-requests\"\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "id": "9",
+      "name": "Slack Alert (High Priority)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1460, 100]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5000/api/webhook/low-quality-request",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"productName\": \"{{ $('Product Request Webhook').item.json.body.productName }}\",\n  \"customerEmail\": \"{{ $('Product Request Webhook').item.json.body.customerEmail }}\",\n  \"reason\": \"Insufficient detail or quality\",\n  \"timestamp\": \"{{ $now }}\"\n}",
+        "options": {}
+      },
+      "id": "10",
+      "name": "Handle Low Quality Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [740, 500]
+    }
+  ],
+  "connections": {
+    "Product Request Webhook": {
+      "main": [
+        [
+          {
+            "node": "Save to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Validate Request Quality",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Request Quality": {
+      "main": [
+        [
+          {
+            "node": "AI Analysis (OpenAI)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Confirmation Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Handle Low Quality Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Analysis (OpenAI)": {
+      "main": [
+        [
+          {
+            "node": "Check AI Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check AI Score": {
+      "main": [
+        [
+          {
+            "node": "Notify Admin (High Priority)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify Admin (Standard)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify Admin (High Priority)": {
+      "main": [
+        [
+          {
+            "node": "Slack Alert (High Priority)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "4",
+  "tags": []
+}
